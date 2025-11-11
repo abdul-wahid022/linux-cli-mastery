@@ -1,4 +1,4 @@
-d# 🐧 Linux Command Line Essentials
+# 🐧 Linux Command Line Essentials
 
 A comprehensive guide to essential Linux commands for beginners and intermediate users. This repository contains 8 detailed modules covering everything from basic file operations to advanced networking and system administration.
 
