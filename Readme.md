@@ -39,14 +39,14 @@ These are my working notes for the Linux command line, written while practising 
 
 | # | Module | Focus | Key Commands |
 | - | ------ | ----- | ------------ |
-| 01 | [Files & Directories](./modules/01-files-and-directories/README.md) | Navigation, creating, copying, moving, deleting | `pwd` `ls` `cd` `mkdir` `touch` `cp` `mv` `rm` `find` |
-| 02 | [Compression & Archiving](./modules/02-compression-and-archiving/README.md) | Archives, compression formats, backups | `tar` `gzip` `bzip2` `xz` `zip` `unzip` |
-| 03 | [File Viewing & Text Tools](./modules/03-file-viewing/README.md) | Reading, searching, comparing, pipes | `cat` `less` `head` `tail` `grep` `wc` `diff` `sort` `uniq` |
-| 04 | [System & Processes](./modules/04-system-and-processes/README.md) | Processes, jobs, resources, services | `ps` `top` `htop` `kill` `df` `du` `free` `systemctl` |
-| 05 | [Users & Permissions](./modules/05-users-and-permissions/README.md) | Ownership, rwx, users, groups, sudo | `chmod` `chown` `adduser` `usermod` `sudo` `id` |
-| 06 | [System Logs](./modules/06-system-logs/README.md) | `/var/log`, journald, log rotation | `journalctl` `dmesg` `last` `lastb` `logrotate` |
-| 07 | [APT Package Management](./modules/07-apt-package-management/README.md) | Installing, updating, removing, troubleshooting | `apt` `dpkg` `apt-mark` |
-| 08 | [Networking](./modules/08-networking/README.md) | Connectivity, DNS, ports, remote access | `ip` `ping` `dig` `traceroute` `ss` `curl` `ssh` `scp` |
+| 01 | [Files & Directories](./modules/01_file_directory_management.md) | Navigation, creating, copying, moving, deleting | `pwd` `ls` `cd` `mkdir` `touch` `cp` `mv` `rm` `find` |
+| 02 | [Compression & Archiving](./modules/02_file_compression_archiving.md) | Archives, compression formats, backups | `tar` `gzip` `bzip2` `xz` `zip` `unzip` |
+| 03 | [File Viewing & Text Tools](./modules/03_file_viewing.md) | Reading, searching, comparing, pipes | `cat` `less` `head` `tail` `grep` `wc` `diff` `sort` `uniq` |
+| 04 | [System & Processes](./modules/04_system_process_essentials.md) | Processes, jobs, resources, services | `ps` `top` `htop` `kill` `df` `du` `free` `systemctl` |
+| 05 | [Users & Permissions](./modules/05_users_permissions.md) | Ownership, rwx, users, groups, sudo | `chmod` `chown` `adduser` `usermod` `sudo` `id` |
+| 06 | [System Logs](./modules/06_var_log_management.md) | `/var/log`, journald, log rotation | `journalctl` `dmesg` `last` `lastb` `logrotate` |
+| 07 | [APT Package Management](./modules/07_apt_package_management.md) | Installing, updating, removing, troubleshooting | `apt` `dpkg` `apt-mark` |
+| 08 | [Networking](./modules/08_networking_essentials.md) | Connectivity, DNS, ports, remote access | `ip` `ping` `dig` `traceroute` `ss` `curl` `ssh` `scp` |
 
 ## Cheat Sheet
 
