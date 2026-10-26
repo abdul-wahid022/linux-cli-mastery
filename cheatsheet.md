@@ -1,6 +1,6 @@
 # Linux CLI Cheat Sheet
 
-One-page reference for the commands covered in the [modules](./README.md#modules).
+One-page reference for the commands covered in the [modules](./modules).
 
 ## Files and directories ([Module 1](./modules/01-files-and-directories/README.md))
 
