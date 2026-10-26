@@ -1,166 +1,149 @@
-# Module 2: File Compression and Archiving
+# Module 2: Compression & Archiving
 
-This module covers the essential Linux commands for compressing and archiving files. While often used together, it's important to understand the difference:
+**Objective:** Bundle files into archives, compress them, extract them again and verify the result.
 
-*   **Archiving** is the process of combining multiple files and directories into a single file (an "archive"). This makes it easier to manage and transfer a large collection of files.
-*   **Compression** is the process of reducing the size of a file to save disk space or reduce transfer time.
-
-We will primarily focus on the two most common tools: `tar` for archiving and `gzip`/`zip` for compression.
-
-### Table of Contents
-1.  [The `tar` Command](#the-tar-command)
-2.  [The `gzip` Command](#the-gzip-command)
-3.  [The `zip` and `unzip` Commands](#the-zip-and-unzip-commands)
-4.  [Summary of Key Concepts](#summary-of-key-concepts)
-
----
-
-### 1. The `tar` Command
-
-`tar` (short for **T**ape **AR**chive) is the standard tool used to **create, extract, and list contents** of archive files (commonly `.tar` files) on Linux. It bundles multiple files into a single `.tar` file without compressing them.
-
-#### Creating an Archive (`tar -cvf`)
-
-To create a new archive, We use:
-- `-c` – Create a new archive
-- `-v` – Verbose output (show progress)
-- `-f` – Specify filename
-
-**Syntax:**
-```bash
-tar -cvf [archive_name.tar] [files_or_directories_to_archive]
-```
-
-**Example:**
-```bash
-tar -cvf myarchive.tar folder1/
-```
-This command creates an archive named `myarchive.tar` containing `folder1` and all of its contents.
-
-#### Extracting an Archive (`tar -xvf`)
-
-To extract files from an archive, We use:
-- `-x` – Extract files
-- `-v` – Verbose output
-- `-f` – Specify filename
-
-**Syntax:**
-```bash
-tar -xvf [archive_name.tar]
-```
-
-**Example:**```bash
-tar -xvf myarchive.tar
-```
-This command extracts all files from `myarchive.tar` into the current directory.
-
-#### Listing Archive Contents (`tar -tvf`)
-
-To view the contents of an archive without extracting it, you use the `t` (list) option.
-
-**Syntax:**
-```bash
-tar -tvf [archive_name.tar]
-```
-- `-t` – List contents of archive
-- `-v` – Verbose output
-- `-f` – Specify filename
-
-**Example:**
-```bash
-tar -tvf myarchive.tar
-```
-This command lists all the files and directories contained within `myarchive.tar`.
+| Section | Topic |
+| ------- | ----- |
+| [1](#1-archiving-vs-compression) | Archiving vs compression |
+| [2](#2-tar) | `tar` |
+| [3](#3-gzip-bzip2-and-xz) | `gzip` `bzip2` `xz` |
+| [4](#4-zip-and-unzip) | `zip` `unzip` |
+| [5](#5-choosing-a-format) | Choosing a format |
+| [6](#6-verifying-with-checksums) | Verifying with checksums |
+| [7](#practice) | Practice, common mistakes |
 
 ---
 
-### 2. gzip / gunzip – Compress / Decompress .tar.gz Files
+## 1. Archiving vs compression
 
-`gzip` is a popular compression tool used to reduce the size of a single file. It is often used to compress a `.tar` archive, resulting in a `.tar.gz` file (also known as a "tarball").
+| Term | What it does | Tool |
+| ---- | ------------ | ---- |
+| **Archiving** | Combines many files and directories into one file. No size reduction. | `tar` |
+| **Compression** | Makes a file smaller. | `gzip`, `bzip2`, `xz` |
+| **Both in one step** | Archive and compress together. | `tar -z`, `tar -j`, `tar -J`, `zip` |
 
-#### Compressing with `gzip`
-
-`gzip` compresses a file and replaces the original with a new, smaller file with a `.gz` extension.
-
-**Syntax:**
-```bash
-gzip [filename]
-```
-
-**Example:**
-```bash
-gzip myarchive.tar
-```
-This command compresses `myarchive.tar` and renames it to `myarchive.tar.gz`. The original `myarchive.tar` file is removed.
-
-#### Decompressing with `gunzip`
-
-`gunzip` is used to decompress files created with `gzip`.
-
-**Syntax:**
-```bash
-gunzip [filename.gz]
-```
-
-**Example:**
-```bash
-gunzip myarchive.tar.gz
-```
-This command decompresses `myarchive.tar.gz` back to `myarchive.tar`. The compressed file is removed.
-> 🔁 **Tip:** You can combine `tar` and `gzip` in one step:
-```bash
-tar -czvf myarchive.tar.gz folder/
-```
-This creates a compressed archive directly.
----
-
-### 3.zip / unzip – Create and Extract ZIP Archives
-
-`zip` is a convenient tool for creating archives and compressing them in a single step, often used for cross-platform compatibility (especially with Windows).
-
-#### Creating a ZIP Archive
-
-To create a `.zip` archive, use the `zip` command. For directories, you must use the `-r` (recursive) option.
-
-**Syntax:**
-```bash
-zip -r [archive_name.zip] [files_or_directories]
-```
-- `-r` – Recursively include all files and subdirectories
-> ⚠️ Without `-r`, only the folder structure (without contents) is added.
-
-**Example:**
-```bash
-zip -r myfolder.zip folder1/```
-This command creates a compressed archive named `myfolder.zip` containing `folder1` and all its sub-folders and files.
-
-#### Extracting a ZIP Archive
-
-To extract the contents of a `.zip` archive, use the `unzip` command.
-
-**Syntax:**
-```bash
-unzip [archive_name.zip]
-```
-
-**Example:**
-```bash
-unzip myfolder.zip
-```
-This command extracts the contents of `myfolder.zip` into the current directory.
+A `.tar.gz` (or `.tgz`) file is a tar archive compressed with gzip.
 
 ---
 
-### 4. Summary of Key Concepts
+## 2. tar
 
-| Command         | Purpose                                     | Options / Flags                                | Example                                  |
-| :-------------- | :------------------------------------------ | :--------------------------------------------- | :--------------------------------------- |
-| `tar -cvf`      | Create an archive                           | `-c` (create), `-v` (verbose), `-f` (filename) | `tar -cvf archive.tar folder/`           |
-| `tar -xvf`      | Extract an archive                          | `-x` (extract)                                 | `tar -xvf archive.tar`                   |
-| `tar -tvf`      | List contents of an archive                 | `-t` (list)                                    | `tar -tvf archive.tar`                   |
-| `gzip`          | Compress a single file                      |                                                | `gzip file.tar`                          |
-| `gunzip`        | Decompress a `.gz` file                     |                                                | `gunzip file.tar.gz`                     |
-| `zip -r`        | Create a compressed `.zip` archive          | `-r` (recursive, for folders)                  | `zip -r archive.zip folder/`             |
-| `unzip`         | Extract a `.zip` archive                    |                                                | `unzip archive.zip`                      |
+`tar` (tape archive) creates, lists and extracts archives.
 
-By mastering these commands, you can efficiently manage your files by archiving them for organization or compressing them to save disk space
+| Flag | Meaning |
+| ---- | ------- |
+| `-c` | Create an archive |
+| `-x` | Extract an archive |
+| `-t` | List the contents |
+| `-f` | Archive file name (must come right before the name) |
+| `-v` | Verbose, print files as they are processed |
+| `-z` | Use gzip compression (`.tar.gz`) |
+| `-j` | Use bzip2 compression (`.tar.bz2`) |
+| `-J` | Use xz compression (`.tar.xz`) |
+| `-C <dir>` | Change to a directory before extracting |
+| `--exclude=<pattern>` | Skip matching files |
+
+| Task | Command |
+| ---- | ------- |
+| Create an archive | `tar -cvf myarchive.tar folder1/` |
+| Create a gzip archive | `tar -czvf myarchive.tar.gz folder1/` |
+| Create a bzip2 archive | `tar -cjvf myarchive.tar.bz2 folder1/` |
+| Create an xz archive | `tar -cJvf myarchive.tar.xz folder1/` |
+| List contents | `tar -tvf myarchive.tar` |
+| Extract into the current directory | `tar -xvf myarchive.tar` |
+| Extract a gzip archive | `tar -xzvf myarchive.tar.gz` |
+| Extract into another directory | `tar -xzvf myarchive.tar.gz -C /tmp/restore` |
+| Extract a single file | `tar -xzvf myarchive.tar.gz folder1/notes.txt` |
+| Exclude files | `tar -czvf backup.tar.gz --exclude='*.log' folder1/` |
+
+Modern `tar` detects the compression type when extracting, so `tar -xvf file.tar.gz` also works.
+
+---
+
+## 3. gzip, bzip2 and xz
+
+These tools compress **one file at a time**. By default they replace the original with the compressed file.
+
+| Command | What it does |
+| ------- | ------------ |
+| `gzip file` | Compress, creates `file.gz` and removes `file` |
+| `gzip -k file` | Compress and keep the original |
+| `gzip -9 file` | Maximum compression (slower) |
+| `gzip -d file.gz` or `gunzip file.gz` | Decompress |
+| `zcat file.gz` | Print a compressed file without extracting it |
+| `bzip2 file` / `bunzip2 file.bz2` | Compress / decompress with bzip2 |
+| `xz file` / `unxz file.xz` | Compress / decompress with xz |
+
+```bash
+gzip -k myarchive.tar
+ls -lh myarchive.tar*
+```
+
+---
+
+## 4. zip and unzip
+
+`zip` archives and compresses in one step and is readable on Windows and macOS.
+
+| Command | What it does |
+| ------- | ------------ |
+| `zip -r myfolder.zip folder1/` | Create a zip of a directory |
+| `zip archive.zip a.txt b.txt` | Zip individual files |
+| `unzip myfolder.zip` | Extract into the current directory |
+| `unzip myfolder.zip -d /tmp/out` | Extract into another directory |
+| `unzip -l myfolder.zip` | List contents without extracting |
+
+> Without `-r`, `zip` stores the directory entry only and leaves out everything inside it.
+
+If `zip` or `unzip` is missing: `sudo apt install zip unzip`.
+
+---
+
+## 5. Choosing a format
+
+| Format | Typical extension | Speed | Compression | Good for |
+| ------ | ----------------- | ----- | ----------- | -------- |
+| gzip | `.tar.gz`, `.tgz` | Fast | Good | Everyday backups, the default choice |
+| bzip2 | `.tar.bz2` | Slower | Better than gzip | Larger archives where size matters |
+| xz | `.tar.xz` | Slowest | Best | Distribution of software, long-term storage |
+| zip | `.zip` | Fast | Good | Sharing with Windows and macOS users |
+
+---
+
+## 6. Verifying with checksums
+
+A checksum proves that a file was not damaged or changed.
+
+```bash
+sha256sum myarchive.tar.gz > myarchive.sha256
+sha256sum -c myarchive.sha256
+```
+```
+myarchive.tar.gz: OK
+```
+
+`md5sum` works the same way but SHA-256 is preferred.
+
+---
+
+## Practice
+
+1. Create a directory `data` with three text files inside.
+2. Archive it as `data.tar`, then list the archive without extracting it.
+3. Create `data.tar.gz`, `data.tar.bz2` and `data.tar.xz`, and compare their sizes with `ls -lh`.
+4. Extract `data.tar.gz` into `/tmp/restore` using `-C`.
+5. Create `data.zip` and list it with `unzip -l`.
+6. Write a SHA-256 checksum for `data.tar.gz` and verify it.
+
+## Common mistakes
+
+| Mistake | What happens | Fix |
+| ------- | ------------ | --- |
+| `tar -cf` with a typo in the order (`tar -fc name`) | The next word is read as the file name | Put `f` last: `-cvf name` |
+| Running `gzip file` and expecting the original to remain | Original is removed | Use `gzip -k` |
+| `zip folder.zip folder/` without `-r` | Empty directory in the zip | Use `zip -r` |
+| Extracting an untrusted archive in the current directory | Files can be scattered around | Extract into an empty directory with `-C` |
+
+---
+
+[Previous: Files & Directories](../01-files-and-directories/README.md) · [Back to index](../../README.md) · [Next: File Viewing](../03-file-viewing/README.md)
