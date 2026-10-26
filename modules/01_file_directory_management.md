@@ -1,162 +1,208 @@
-# Module 1: File & Directory Management
+# Module 1: Files & Directories
 
-This module covers essential Linux commands for managing files and directories from the command line.
+**Objective:** Move around the filesystem and create, copy, move, find and delete files and directories from the command line.
 
+| Section | Topic |
+| ------- | ----- |
+| [1](#1-the-linux-filesystem) | The Linux filesystem |
+| [2](#2-navigation) | Navigation: `pwd` `ls` `cd` |
+| [3](#3-creating-files-and-directories) | Creating: `mkdir` `touch` `cat` `echo` |
+| [4](#4-copying-moving-and-deleting) | Copying, moving, deleting: `cp` `mv` `rm` `rmdir` |
+| [5](#5-finding-and-inspecting) | Finding and inspecting: `find` `file` `stat` `tree` `which` |
+| [6](#6-wildcards-and-links) | Wildcards and links |
+| [7](#7-getting-help) | Getting help |
+| [8](#8-common-flags) | Common flags |
+| [9](#practice) | Practice, common mistakes |
 
-## Table of Contents
+---
 
-1. [pwd – Print Working Directory](#pwd--print-working-directory)
-2. [ls – List Files and Directories](#ls--list-files-and-directories)
-3. [cd – Change Directory](#cd--change-directory)
-4. [mkdir – Make Directory](#mkdir--make-directory)
-5. [rmdir – Remove Empty Directory](#rmdir--remove-empty-directory)
-6. [rm – Remove Files or Directories](#rm--remove-files-or-directories)
-7. [cp – Copy Files or Directories](#cp--copy-files-or-directories)
-8. [mv – Move or Rename Files or Directories](#mv--move-or-rename-files-or-directories)
-9. [Common Flags and Options](#common-flags-and-options)
+## 1. The Linux filesystem
 
+Everything starts at the root directory `/`. There are no drive letters.
 
+| Directory | Contents |
+| --------- | -------- |
+| `/` | Root of the filesystem |
+| `/home` | Home directories of users (`/home/kali`) |
+| `/root` | Home directory of the root user |
+| `/etc` | System configuration files |
+| `/var` | Variable data: logs, caches, spool files |
+| `/tmp` | Temporary files, cleared on reboot |
+| `/usr` | Installed programs and libraries |
+| `/bin`, `/sbin` | Essential commands (user and system) |
+| `/opt` | Optional third-party software |
+| `/dev` | Device files |
+| `/proc` | Live information about processes and the kernel |
 
-## pwd – Print Working Directory
+**Absolute and relative paths**
 
-The `pwd` command prints the current working directory (i.e., where you are located in the filesystem).
+| Type | Starts with | Example |
+| ---- | ----------- | ------- |
+| Absolute | `/` | `/home/kali/Documents/notes.txt` |
+| Relative | anything else | `Documents/notes.txt` (from the current directory) |
 
-### Example:
+Special names: `.` is the current directory, `..` is the parent directory, `~` is your home directory.
+
+Files whose names start with a dot (`.bashrc`) are hidden. Show them with `ls -a`.
+
+---
+
+## 2. Navigation
+
+| Command | What it does | Example |
+| ------- | ------------ | ------- |
+| `pwd` | Print the current directory | `pwd` |
+| `ls` | List files | `ls` |
+| `ls -a` | Include hidden files | `ls -a` |
+| `ls -l` | Long format: permissions, owner, size, date | `ls -l` |
+| `ls -lh` | Long format with readable sizes (KB, MB) | `ls -lh` |
+| `ls -lt` | Sort by modification time, newest first | `ls -lt` |
+| `ls -R` | List subdirectories recursively | `ls -R` |
+| `ls -d */` | List only directories | `ls -d */` |
+| `cd <dir>` | Change directory | `cd Documents` |
+| `cd ..` | Go up one level | `cd ..` |
+| `cd ~` or `cd` | Go to the home directory | `cd ~/Desktop` |
+| `cd -` | Go back to the previous directory | `cd -` |
+
 ```bash
 pwd
 ```
-**Output:**
 ```
 /home/kali/Desktop
 ```
 
 ---
 
-## ls – List Files and Directories
+## 3. Creating files and directories
 
-The `ls` command lists files and directories in the current location.
+| Command | What it does | Example |
+| ------- | ------------ | ------- |
+| `mkdir <name>` | Create a directory | `mkdir test` |
+| `mkdir -p a/b/c` | Create nested directories, parents as needed | `mkdir -p folder1/folder2/folder3` |
+| `mkdir dir/{a,b,c}` | Create several directories at once (brace expansion) | `mkdir project/{src,docs,tests}` |
+| `touch <file>` | Create an empty file, or update its timestamp | `touch notes.txt` |
+| `echo "text" > file` | Write text to a file (overwrites) | `echo "hello" > notes.txt` |
+| `echo "text" >> file` | Append text to a file | `echo "more" >> notes.txt` |
+| `cat > file` | Type content, finish with `Ctrl+D` | `cat > notes.txt` |
 
-### Common Options:
-- `ls` – Lists non-hidden files.
-- `ls -a` – Lists all files, including hidden ones (files starting with `.`).
-- `ls -l` – Lists files in long format (shows permissions, owner, size, date).
-- `ls -lh` – Human-readable file sizes (e.g., KB, MB).
-- `ls -lt` – Sorts files by time (newest first).
+---
 
-### Example:
+## 4. Copying, moving and deleting
+
+### Copy: `cp`
+
+| Command | What it does |
+| ------- | ------------ |
+| `cp file1 file2` | Copy a file |
+| `cp file ~/Desktop/` | Copy a file into a directory |
+| `cp -r folder/ ~/Documents/` | Copy a directory and its contents |
+| `cp -i file1 file2` | Ask before overwriting |
+| `cp -v file1 file2` | Print each file as it is copied |
+| `cp -a folder/ backup/` | Archive mode: keeps permissions, owners and timestamps |
+
+### Move and rename: `mv`
+
+| Command | What it does |
+| ------- | ------------ |
+| `mv file.txt ~/Desktop/` | Move a file |
+| `mv old.txt new.txt` | Rename a file |
+| `mv folder1/ folder2/` | Move `folder1` inside `folder2` if `folder2` exists, otherwise rename it |
+
+### Delete: `rmdir` and `rm`
+
+| Command | What it does |
+| ------- | ------------ |
+| `rmdir test` | Delete an empty directory |
+| `rm file.txt` | Delete a file |
+| `rm -i file.txt` | Ask before each deletion |
+| `rm -r folder` | Delete a directory and everything in it |
+| `rm -rf folder` | Same, never asks, ignores missing files |
+
+> **Warning:** there is no recycle bin. `rm` deletes immediately. Check the path before you press Enter, and never run `rm -rf` on a path you built from a variable you have not printed first.
+
+---
+
+## 5. Finding and inspecting
+
+| Command | What it does | Example |
+| ------- | ------------ | ------- |
+| `find <dir> -name "<pattern>"` | Find by name | `find ~ -name "*.txt"` |
+| `find <dir> -type d` | Find directories (`-type f` for files) | `find . -type d` |
+| `find <dir> -size +10M` | Find files larger than 10 MB | `find / -size +10M 2>/dev/null` |
+| `find <dir> -mtime -1` | Modified in the last 24 hours | `find . -mtime -1` |
+| `file <name>` | Detect the file type | `file notes.txt` |
+| `stat <name>` | Size, permissions, timestamps | `stat notes.txt` |
+| `which <command>` | Show where a command lives | `which python3` |
+| `tree` | Show a directory tree (`sudo apt install tree` if missing) | `tree -L 2` |
+
+---
+
+## 6. Wildcards and links
+
+**Wildcards** let one pattern match many names.
+
+| Pattern | Matches | Example |
+| ------- | ------- | ------- |
+| `*` | Any number of characters | `ls *.txt` |
+| `?` | Exactly one character | `ls file?.txt` |
+| `[abc]` | One character from the set | `ls file[12].txt` |
+
+**Symbolic links** are shortcuts to another file or directory.
+
 ```bash
-ls -lh
+ln -s /var/log/syslog ~/syslog-link
+ls -l ~/syslog-link
 ```
 
 ---
 
-## cd – Change Directory
+## 7. Getting help
 
-The `cd` command changes your current directory.
+| Command | What it does |
+| ------- | ------------ |
+| `man <command>` | Full manual (quit with `q`) |
+| `<command> --help` | Short usage summary |
+| `type <command>` | Shows whether it is a program, alias or shell builtin |
 
-### Examples:
-```bash
-cd Documents      # Moves into the Documents folder
-cd ..             # Goes up one directory level
-cd /home/kali/Desktop  # Goes directly to the Desktop
-cd ~/Desktop      # Same as above (~ = home directory shortcut)
-```
+Useful shell shortcuts: `Tab` completes names, `Ctrl+C` cancels, `Ctrl+L` clears the screen, `Ctrl+R` searches history, `!!` repeats the last command, `history` lists past commands.
 
 ---
 
-## mkdir – Make Directory
+## 8. Common flags
 
-The `mkdir` command creates a new directory.
-
-### Examples:
-```bash
-mkdir test        # Creates a folder named "test"
-mkdir -p folder1/folder2/folder3  # Creates nested directories
-```
-
-**Note:** The `-p` flag allows you to create parent directories as needed.
-
----
-
-## rmdir – Remove Empty Directory
-
-The `rmdir` command deletes an empty directory.
-
-### Example:
-```bash
-rmdir test        # Deletes the "test" folder (only if empty)
-```
+| Flag | Meaning | Example |
+| ---- | ------- | ------- |
+| `-a` | All (include hidden files) | `ls -a` |
+| `-l` | Long format | `ls -l` |
+| `-h` | Human-readable sizes | `ls -lh` |
+| `-r`, `-R` | Recursive | `rm -r folder`, `ls -R` |
+| `-f` | Force, no prompts | `rm -f file` |
+| `-i` | Interactive, prompt before overwriting or deleting | `cp -i a b` |
+| `-v` | Verbose, print what is being done | `cp -v a b` |
+| `-t` | Sort by time (with `ls`) | `ls -lt` |
+| `-p` | Create parents (with `mkdir`) | `mkdir -p a/b/c` |
 
 ---
 
-## rm – Remove Files or Directories
+## Practice
 
-The `rm` command deletes files or directories.
+1. Go to your home directory and print where you are.
+2. Create this structure with one command: `project/src`, `project/docs`, `project/tests`.
+3. Create `project/docs/notes.txt` with the text `first note`, then append a second line.
+4. Copy `project/docs/notes.txt` to `project/src/` and rename the copy to `copy.txt`.
+5. Use `find` to list every `.txt` file under `project`.
+6. Delete the `project` directory and confirm it is gone with `ls`.
 
-### Examples:
-```bash
-rm file.txt              # Deletes a file
-rm -f file.txt           # Forces deletion without confirmation
-rm -r foldername         # Recursively deletes a folder and its contents
-rm -rf foldername        # Forces recursive deletion (use with caution!)
-```
+## Common mistakes
 
-> ⚠️ **Warning:** `rm -rf` is a powerful and dangerous command. It deletes files/folders **without confirmation**.
-
----
-
-## cp – Copy Files or Directories
-
-The `cp` command copies files or directories.
-
-### Examples:
-```bash
-cp file1.txt file2.txt                 # Copies file1 to file2
-cp file.txt /home/kali/Desktop/        # Copies file to Desktop
-cp -r folder/ /home/kali/Documents/    # Copies a folder and its contents
-```
-
-### Common Options:
-- `-r` – Recursive (for copying directories)
-- `-i` – Interactive (asks before overwriting)
-- `-v` – Verbose (shows progress)
-
-### Example with Options:
-```bash
-cp -iv file1.txt file2.txt
-```
-This will prompt before overwriting and show progress.
+| Mistake | What happens | Fix |
+| ------- | ------------ | --- |
+| `rm -rf /some/path /` with a stray space | Deletes far more than intended | Check the command before Enter; use `rm -ri` while learning |
+| `cp folder/ dest/` without `-r` | `omitting directory` error | Add `-r` |
+| `mv a b` where `b` already exists | `b` is silently overwritten | Use `mv -i` |
+| `rmdir` on a non-empty directory | `Directory not empty` | Use `rm -r` |
+| Spaces in names (`my file.txt`) | Treated as two arguments | Quote it: `"my file.txt"` |
 
 ---
 
-## mv – Move or Rename Files or Directories
-
-The `mv` command moves or renames files or directories.
-
-### Examples:
-```bash
-mv file.txt /home/kali/Desktop/   # Moves file to Desktop
-mv oldname.txt newname.txt       # Renames file
-mv folder1/ folder2/             # Moves folder1 inside folder2
-```
-
----
-
-## Common Flags and Options
-
-| Flag | Meaning (English)                      | Example Usage     |
-|------|----------------------------------------|-------------------|
-| `-a` | Show all (including hidden files)      | `ls -a`           |
-| `-l` | Long format (detailed view)            | `ls -l`           |
-| `-r` | Recursive (applies to subdirectories)  | `rm -r folder`    |
-| `-f` | Force (skip confirmation prompts)      | `rm -f file`      |
-| `-y` | Assume "yes" to all prompts            | `apt -y install`  |
-| `-t` | Sort by time or type (context-based)   | `ls -lt`          |
-| `-i` | Interactive (prompt before overwriting)| `cp -i file.txt`  |
-| `-v` | Verbose (show detailed output)         | `cp -v file.txt`  |
-
----
-
-## Summary
-
-These commands are the foundation of navigating and managing files and directories in a Linux environment. Mastering them will help you work more efficiently in the terminal.
+[Back to index](../../README.md) · [Next: Compression & Archiving](../02-compression-and-archiving/README.md)
