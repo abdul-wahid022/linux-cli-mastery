@@ -2,7 +2,7 @@
 
 One-page reference for the commands covered in the [modules](./modules).
 
-## Files and directories ([Module 1](./modules/01-files-and-directories.md))
+## Files and directories ([Module 1](./modules/01_file_directory_management.md))
 
 | Task | Command |
 | ---- | ------- |
@@ -19,7 +19,7 @@ One-page reference for the commands covered in the [modules](./modules).
 | Symbolic link | `ln -s target link` |
 | Help | `man cmd` · `cmd --help` |
 
-## Compression and archives ([Module 2](./modules/02-compression-and-archiving.md))
+## Compression and archives ([Module 2](./modules/02_file_compression_archiving.md))
 
 | Task | Command |
 | ---- | ------- |
@@ -31,7 +31,7 @@ One-page reference for the commands covered in the [modules](./modules).
 | Zip / unzip | `zip -r a.zip dir/` · `unzip a.zip` |
 | Checksum | `sha256sum file` |
 
-## Viewing and text tools ([Module 3](./modules/03-file-viewing.md))
+## Viewing and text tools ([Module 3](./modules/03_file_viewing.md))
 
 | Task | Command |
 | ---- | ------- |
@@ -46,7 +46,7 @@ One-page reference for the commands covered in the [modules](./modules).
 | Redirect output / append | `cmd > f` · `cmd >> f` |
 | Discard errors | `cmd 2>/dev/null` |
 
-## System and processes ([Module 4](./modules/04-system-and-processes.md))
+## System and processes ([Module 4](./modules/04_system_process_essentials.md))
 
 | Task | Command |
 | ---- | ------- |
@@ -63,7 +63,7 @@ One-page reference for the commands covered in the [modules](./modules).
 | Service status / restart / enable at boot | `systemctl status s` · `sudo systemctl restart s` · `sudo systemctl enable s` |
 | Edit scheduled jobs | `crontab -e` |
 
-## Users and permissions ([Module 5](./modules/05-users-and-permissions.md))
+## Users and permissions ([Module 5](./modules/05_users_permissions.md))
 
 | Task | Command |
 | ---- | ------- |
@@ -79,7 +79,7 @@ One-page reference for the commands covered in the [modules](./modules).
 
 Permission values: `r = 4`, `w = 2`, `x = 1`.
 
-## Logs ([Module 6](./modules/06-system-logs.md))
+## Logs ([Module 6](./modules/06_var_log_management.md))
 
 | Task | Command |
 | ---- | ------- |
@@ -91,7 +91,7 @@ Permission values: `r = 4`, `w = 2`, `x = 1`.
 | Logins / failed logins | `last` · `sudo lastb` |
 | Read rotated log | `zcat file.gz` |
 
-## APT ([Module 7](./modules/07-apt-package-management.md))
+## APT ([Module 7](./modules/07_apt_package_management.md))
 
 | Task | Command |
 | ---- | ------- |
@@ -103,7 +103,7 @@ Permission values: `r = 4`, `w = 2`, `x = 1`.
 | Files of a package / owner of a file | `dpkg -L p` · `dpkg -S /path` |
 | Fix broken installs | `sudo apt --fix-broken install` |
 
-## Networking ([Module 8](./modules/08-networking.md))
+## Networking ([Module 8](./modules/08_networking_essentials.md))
 
 | Task | Command |
 | ---- | ------- |
